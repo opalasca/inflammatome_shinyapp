@@ -1,7 +1,7 @@
 
 Shiny app accompanying the manuscript "The inflammatome: A meta-analysis of human genes regulated during inflammation"
 
-Available online at: [https://oana-palasca.shinyapps.io/inflammatome_shinyapp/]
+Available online: https://oana-palasca.shinyapps.io/inflammatome_shinyapp/
 
 Try the app locally by running the following code in R:
 
