@@ -372,6 +372,9 @@ run_gsea <- function(data, gene_sets, sorting_value_col_name) {
     stop("No valid data available for GSEA analysis after filtering NAs.")
   }
   
+  # Ensure numeric
+  data[[sorting_value_col_name]] <- as.numeric(data[[sorting_value_col_name]])
+
   # Add small random noise to sorting column to break ties
   data[[sorting_value_col_name]] <- data[[sorting_value_col_name]] + runif(nrow(data), min = 1e-10, max = 1e-8)
   
@@ -585,6 +588,10 @@ plot_volcano <- function(data, keytype="Ensembl", logFC_col_name="log2FoldChange
   
   keytype <- tolower(keytype)
   
+  # Ensure numeric
+  data[[pval_col_name]] <- as.numeric(data[[pval_col_name]])
+  data[[logFC_col_name]] <- as.numeric(data[[logFC_col_name]])
+  
   if (keytype == "ensembl") {
     data <- data %>%
       arrange(desc(.data[[pval_col_name]])) %>%
@@ -626,11 +633,11 @@ plot_volcano <- function(data, keytype="Ensembl", logFC_col_name="log2FoldChange
   # Volcano plot for top 2000
   p1 <- ggplot(data %>% arrange(top_2000), aes(x = adj_logFC, y = adj_pval, color = top_2000 )) + 
     geom_point(size = 3, alpha = 0.6) +  # Increase point size
-    scale_color_manual(values = c("no" = "grey", "yes" = "red")) +
+    scale_color_manual(name = "Found in gene set", values = c("no" = "grey", "yes" = "red")) +
     labs(
       x = "Log Fold Change",
       y = "-log10(P-Value)",
-      title = paste0("Inflammatome (Top 2000)")
+      title = paste0("Volcano plot of the input dataset with\ninflammatome genes marked in red")
     ) +
     theme_custom + 
     geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "black", size = 1) +  # Significance line
@@ -643,11 +650,11 @@ plot_volcano <- function(data, keytype="Ensembl", logFC_col_name="log2FoldChange
   # Volcano plot for top 100
   p2 <- ggplot(data %>% arrange(top_100), aes(x = adj_logFC, y = adj_pval, color = top_100)) + 
     geom_point(size = 3, alpha = 0.6) +  # Increase point size
-    scale_color_manual(values = c("no" = "grey", "yes" = "red")) +
+    scale_color_manual(name = "Found in gene set", values = c("no" = "grey", "yes" = "red")) +
     labs(
       x = "Log Fold Change",
       y = "-log10(P-Value)",
-      title = paste0("Inflammation Signature (Top 100)")
+      title = paste0("Volcano plot of the input dataset with\ninflammation signature genes marked in red")
     ) +
     theme_custom + 
     geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "black", size = 1) +  # Significance line

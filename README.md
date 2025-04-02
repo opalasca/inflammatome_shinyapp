@@ -1,7 +1,7 @@
 
 Shiny app accompanying the manuscript "The inflammatome: A meta-analysis of human genes regulated during inflammation"
 
-Available online: https://oana-palasca.shinyapps.io/inflammatome_shinyapp/
+Available online: https://oana-palasca.shinyapps.io/inflammatome_shinyapp
 
 Try the app locally by running the following code in R:
 
@@ -30,3 +30,8 @@ For GSEA analysis, we recommend sorting the genes by the test statistic (e.g. st
 
 Gene/protein identifiers accepted: Ensembl, Entrez, gene symbol (HGNC), UniProt, RefSeq. The ids must be unique. 
 Warning: if the data is transcript-level (e.g. RefSeq), with many transcript isoforms per gene, the data should be summarized to gene-level before using inflammatomeR.
+
+Internal identifier mapping: IDs are mapped to Entrez IDs using org.Hs.eg.db (Bioconductor) and the bitr function from the clusterProfiler package (Bioconductor). 
+When multiple IDs map to the same Entrez ID, the first one, alphabetically, is kept. 
+#For a more refined mapping, press the "Refined ID mapping"" button, which allows to select the column containing mean expression value from the input data. 
+#This way, the gene with highest expression value will be selected when multiple IDs map to the same Entrez ID. 
